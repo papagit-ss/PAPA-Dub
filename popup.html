@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>PAPA Dub</title>
+    <link rel="stylesheet" href="popup.css">
+  </head>
+  <body>
+    <main class="app-shell">
+      <header class="topbar">
+        <div class="brand">
+          <img src="icons/icon-48.png" alt="PAPA Dub" width="36" height="36">
+          <div>
+            <div class="brand-title-row">
+              <strong>PAPA Dub</strong>
+              <span class="papa-badge">PRO v0.5.1</span>
+            </div>
+            <span>دوبله زنده و فوق‌سریع با هوش مصنوعی</span>
+          </div>
+        </div>
+        <div class="topbar-actions">
+          <button class="icon-button" id="downloadSrt" title="دانلود زیرنویس دوزبانه (SRT)" aria-label="دانلود زیرنویس SRT" hidden>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11m0 0-4-4m4 4 4-4M5 19h14"/></svg>
+          </button>
+          <button class="icon-button" id="openStats" title="آمار و تاریخچه PAPA Dub" aria-label="آمار و تاریخچه">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 20V10m7 10V4m7 16v-7"/></svg>
+          </button>
+        </div>
+      </header>
+
+      <section class="status-strip" id="statusStrip" data-status="idle">
+        <span class="status-dot"></span>
+        <span id="statusText">آماده برای دوبله زنده</span>
+        <span class="timer" id="timer">00:00</span>
+      </section>
+
+      <section class="hero-card">
+        <div class="hero-grid">
+          <div>
+            <label class="field-label" for="targetLanguage">زبان صدای دوبله</label>
+            <div class="select-wrap">
+              <select id="targetLanguage">
+                <option value="fa">🇮🇷 فارسی</option>
+                <option value="en">🇺🇸 انگلیسی</option>
+                <option value="ar">🇸🇦 عربی</option>
+                <option value="tr">🇹🇷 ترکی</option>
+                <option value="de">🇩🇪 آلمانی</option>
+                <option value="fr">🇫🇷 فرانسوی</option>
+                <option value="es">🇪🇸 اسپانیایی</option>
+                <option value="ru">🇷🇺 روسی</option>
+                <option value="ja">🇯🇵 ژاپنی</option>
+                <option value="ko">🇰🇷 کره‌ای</option>
+                <option value="zh">🇨🇳 چینی</option>
+              </select>
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m8 10 4 4 4-4"/></svg>
+            </div>
+          </div>
+          <div>
+            <label class="field-label" for="voiceSelect">صدای گوینده (Voice)</label>
+            <div class="select-wrap">
+              <select id="voiceSelect">
+                <option value="auto">✨ خودکار (پیش‌فرض)</option>
+                <option value="Aoede">🎙️ Aoede (زنانه · گرم)</option>
+                <option value="Kore">🎙️ Kore (زنانه · شفاف)</option>
+                <option value="Puck">🎙️ Puck (مردانه · پرانرژی)</option>
+                <option value="Charon">🎙️ Charon (مردانه · عمیق)</option>
+                <option value="Fenrir">🎙️ Fenrir (مردانه · سینمایی)</option>
+              </select>
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m8 10 4 4 4-4"/></svg>
+            </div>
+          </div>
+        </div>
+
+        <button class="primary-button full-width" id="toggleDubbing">
+          <span class="button-icon" id="buttonIcon">▶</span>
+          <span id="buttonLabel">شروع دوبله زنده</span>
+        </button>
+        <p class="tab-hint" id="tabHint">فقط صدای همین تب پردازش می‌شود · اتصال پایدار خودکار فعال است.</p>
+      </section>
+
+      <section class="error-card" id="errorCard" hidden>
+        <div class="error-icon">!</div>
+        <div>
+          <strong>دوبله شروع نشد</strong>
+          <p id="errorText"></p>
+        </div>
+        <button id="dismissError" aria-label="بستن">×</button>
+      </section>
+
+      <section class="control-card" id="controlCard">
+        <div class="section-heading">
+          <div>
+            <span class="eyebrow">میکس هوشمند و کنترل تاخیر</span>
+            <strong>هماهنگی لحظه‌ای با ویدیو</strong>
+          </div>
+          <span class="buffer-chip" id="bufferChip">بافر ۰ms</span>
+        </div>
+
+        <div class="range-row">
+          <span class="range-icon original">◌</span>
+          <label for="originalVolume">حجم صدای اصلی</label>
+          <input id="originalVolume" type="range" min="0" max="100" value="20">
+          <output id="originalValue">۲۰٪</output>
+        </div>
+        <div class="range-row">
+          <span class="range-icon translated">◉</span>
+          <label for="translatedVolume">حجم صدای دوبله</label>
+          <input id="translatedVolume" type="range" min="0" max="120" value="100">
+          <output id="translatedValue">۱۰۰٪</output>
+        </div>
+
+        <label class="toggle-row">
+          <div>
+            <strong>میکس هوشمند (Auto-Ducking)</strong>
+            <span>صدای اصلی فقط هنگام صحبت دوبلور کم می‌شود</span>
+          </div>
+          <input id="autoDucking" type="checkbox" checked>
+          <span class="switch" aria-hidden="true"></span>
+        </label>
+
+        <label class="toggle-row">
+          <div>
+            <strong>حالت کم‌تاخیر (Turbo 40ms)</strong>
+            <span>ارسال قطعات ۴۰ میلی‌ثانیه‌ای و تشخیص فوری جملات</span>
+          </div>
+          <input id="lowLatencyMode" type="checkbox" checked>
+          <span class="switch" aria-hidden="true"></span>
+        </label>
+
+        <label class="toggle-row">
+          <div>
+            <strong>جبران هوشمند عقب‌ماندگی</strong>
+            <span>تنظیم خودکار سرعت پخش (تا ۱٫۴۵×) و همگام‌سازی زنده</span>
+          </div>
+          <input id="autoCatchUp" type="checkbox" checked>
+          <span class="switch" aria-hidden="true"></span>
+        </label>
+
+        <label class="toggle-row">
+          <div>
+            <strong>زیرنویس دوزبانه (سینک با صدای دوبله)</strong>
+            <span>نمایش هم‌زمان با پخش صدای دوبلور · قابل جابه‌جایی با ماوس</span>
+          </div>
+          <input id="captionsEnabled" type="checkbox" checked>
+          <span class="switch" aria-hidden="true"></span>
+        </label>
+      </section>
+
+      <section class="transcript-card" id="transcriptCard" hidden>
+        <div class="section-heading compact">
+          <span class="eyebrow">متن زنده PAPA DUB</span>
+          <div class="transcript-meta">
+            <button class="srt-pill" id="exportLiveSrt" type="button" title="ذخیره زیرنویس تا این لحظه">دانلود SRT</button>
+            <span class="live-badge">LIVE</span>
+          </div>
+        </div>
+        <p class="original-line" id="originalLine">در انتظار صدای گوینده…</p>
+        <p class="translation-line" id="translationLine">ترجمه اینجا نمایش داده می‌شود.</p>
+      </section>
+
+      <section class="settings-card">
+        <button class="settings-trigger" id="settingsTrigger" aria-expanded="false">
+          <span class="settings-title">
+            <span class="settings-icon">⌁</span>
+            <span><strong>تنظیمات اتصال Gemini</strong><small id="keyStatus">کلید API وارد نشده</small></span>
+          </span>
+          <span class="chevron">⌄</span>
+        </button>
+
+        <div class="settings-body" id="settingsBody" hidden>
+          <label class="field-label" for="modelSelect">مدل Gemini</label>
+          <div class="select-wrap">
+            <select id="modelSelect" dir="ltr"></select>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m8 10 4 4 4-4"/></svg>
+          </div>
+          <p class="security-note" id="modelHint"></p>
+          <label class="field-label" for="apiKey">Gemini API Key</label>
+          <div class="key-row">
+            <input id="apiKey" type="password" dir="ltr" autocomplete="off" placeholder="AIza…">
+            <button class="ghost-button" id="toggleKeyVisibility" type="button">نمایش</button>
+          </div>
+          <label class="check-row">
+            <input type="checkbox" id="rememberKey">
+            <span>کلید روی این دستگاه باقی بماند</span>
+          </label>
+          <p class="security-note">در حالت پیش‌فرض، کلید فقط تا زمان بسته‌شدن مرورگر نگهداری می‌شود.</p>
+          <div class="settings-actions">
+            <button class="save-button" id="saveKey">بررسی و ذخیره</button>
+            <button class="danger-ghost" id="clearKey">حذف کلید</button>
+          </div>
+          <div class="save-message" id="saveMessage" hidden></div>
+        </div>
+      </section>
+
+      <footer>
+        <span>PAPA Pro Edition · بدون سرور واسط و کاملاً خصوصی</span>
+        <span class="version">v0.5.1</span>
+      </footer>
+    </main>
+    <script src="popup.js"></script>
+  </body>
+</html>

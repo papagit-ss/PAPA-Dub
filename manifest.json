@@ -1,0 +1,45 @@
+{
+  "manifest_version": 3,
+  "name": "PAPA Dub — Live AI Dubbing",
+  "short_name": "PAPA Dub",
+  "version": "0.5.1",
+  "description": "دوبله زنده و فوق‌سریع صدای تب مرورگر با هویت PAPA Dub، میکس هوشمند صدا (Auto-Ducking)، اتصال پایدار، انتخاب گوینده و خروجی زیرنویس SRT.",
+  "minimum_chrome_version": "116",
+  "permissions": [
+    "activeTab",
+    "offscreen",
+    "scripting",
+    "storage",
+    "tabCapture"
+  ],
+  "host_permissions": [
+    "https://generativelanguage.googleapis.com/*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_title": "PAPA Dub — دوبله زنده فوق‌سریع",
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icons/icon-16.png",
+      "32": "icons/icon-32.png",
+      "48": "icons/icon-48.png",
+      "128": "icons/icon-128.png"
+    }
+  },
+  "icons": {
+    "16": "icons/icon-16.png",
+    "32": "icons/icon-32.png",
+    "48": "icons/icon-48.png",
+    "128": "icons/icon-128.png"
+  },
+  "commands": {
+    "toggle-dubbing": {
+      "suggested_key": {
+        "default": "Alt+Shift+D"
+      },
+      "description": "شروع یا توقف دوبله زنده PAPA Dub"
+    }
+  }
+}

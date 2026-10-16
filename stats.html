@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>آمار PAPA Dub</title>
+    <link rel="stylesheet" href="stats.css">
+  </head>
+  <body>
+    <main class="page">
+      <header>
+        <div class="brand"><img src="icons/icon-48.png" alt="PAPA Dub"><div><strong>PAPA Dub</strong><span>آمار خصوصی استفاده از دوبله زنده</span></div></div>
+        <div class="header-actions">
+          <button id="exportData">خروجی JSON</button>
+          <button class="danger" id="clearData">پاک‌کردن تاریخچه</button>
+        </div>
+      </header>
+
+      <section class="intro">
+        <div><span class="eyebrow">PAPA DUB · فقط روی دستگاه شما</span><h1>الگوی شنیدن شما</h1><p>این اطلاعات کاملاً محلی هستند و بدون اجازه شما برای هیچ سروری ارسال نمی‌شوند.</p></div>
+        <div class="privacy-badge"><span>✓</span>حریم خصوصی PAPA فعال</div>
+      </section>
+
+      <section class="kpi-grid">
+        <article><span>زمان دوبله</span><strong id="totalTime">۰ دقیقه</strong><small>مجموع همه نشست‌ها</small></article>
+        <article><span>تعداد نشست</span><strong id="sessionCount">۰</strong><small>جلسه ترجمه‌شده</small></article>
+        <article><span>زبان محبوب</span><strong id="topLanguage">—</strong><small>بیشترین زمان استفاده</small></article>
+        <article><span>میانگین نشست</span><strong id="averageTime">۰ دقیقه</strong><small>برای هر بار استفاده</small></article>
+      </section>
+
+      <section class="dashboard-grid">
+        <article class="activity-card">
+          <div class="card-heading"><div><span class="eyebrow">۸۴ روز اخیر</span><h2>پیوستگی استفاده</h2></div><div class="legend"><span>کم</span><i></i><i></i><i></i><i></i><span>زیاد</span></div></div>
+          <div class="heatmap" id="heatmap"></div>
+          <p id="activitySummary">هنوز فعالیتی ثبت نشده است.</p>
+        </article>
+
+        <article class="language-card">
+          <div class="card-heading"><div><span class="eyebrow">زبان‌ها</span><h2>زمان دوبله بر اساس زبان</h2></div></div>
+          <div id="languageBars" class="bars"></div>
+        </article>
+
+        <article class="history-card">
+          <div class="card-heading"><div><span class="eyebrow">تاریخچه</span><h2>آخرین نشست‌ها</h2></div><span id="historyCount"></span></div>
+          <div class="history-list" id="historyList"></div>
+        </article>
+      </section>
+    </main>
+    <script src="stats.js"></script>
+  </body>
+</html>

@@ -1,0 +1,97 @@
+#papa-dub-caption-root {
+  all: initial;
+  position: fixed;
+  z-index: 2147483647;
+  left: 50%;
+  bottom: max(30px, env(safe-area-inset-bottom));
+  width: min(760px, calc(100vw - 40px));
+  transform: translate(-50%, 20px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .18s ease, transform .18s ease;
+  font-family: Tahoma, "Segoe UI", system-ui, sans-serif;
+}
+
+#papa-dub-caption-root.papa-visible { opacity: 1; transform: translate(-50%, 0); }
+#papa-dub-caption-root.papa-dragging { transition: none !important; user-select: none; }
+
+#papa-dub-caption-root .papa-caption-shell {
+  padding: 11px 18px 15px;
+  color: #f6fffc;
+  background: rgba(5, 14, 12, .9);
+  border: 1px solid rgba(69, 230, 187, .28);
+  border-radius: 16px;
+  box-shadow: 0 18px 60px rgba(0,0,0,.55);
+  backdrop-filter: blur(16px);
+  text-align: center;
+}
+
+#papa-dub-caption-root .papa-caption-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  direction: ltr;
+  pointer-events: auto;
+  cursor: grab;
+  padding-bottom: 4px;
+  border-bottom: 1px solid rgba(182, 231, 218, 0.08);
+}
+#papa-dub-caption-root.papa-dragging .papa-caption-toolbar { cursor: grabbing; }
+
+#papa-dub-caption-root .papa-caption-brand {
+  color: #45e6bb;
+  font-size: 9.5px;
+  font-weight: 800;
+  letter-spacing: 1.4px;
+  display: flex;
+  align-items: center;
+}
+#papa-dub-caption-root .papa-caption-brand span {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  margin-right: 6px;
+  border-radius: 50%;
+  background: #ff625b;
+  box-shadow: 0 0 8px rgba(255, 98, 91, .85);
+}
+
+#papa-dub-caption-root .papa-caption-actions {
+  display: flex;
+  gap: 4px;
+}
+#papa-dub-caption-root .papa-caption-actions button {
+  all: unset;
+  cursor: pointer;
+  padding: 2px 6px;
+  font-size: 9px;
+  font-weight: 700;
+  color: #9bb5ae;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(182, 231, 218, 0.14);
+  border-radius: 6px;
+}
+#papa-dub-caption-root .papa-caption-actions button:hover {
+  color: #45e6bb;
+  border-color: rgba(69, 230, 187, 0.4);
+}
+
+#papa-dub-caption-root .papa-caption-original {
+  margin-top: 7px;
+  color: #aabbb6;
+  font-size: clamp(12px, 1.45vw, 15.5px);
+  line-height: 1.55;
+}
+#papa-dub-caption-root .papa-caption-translation {
+  margin-top: 4px;
+  color: #fff;
+  font-weight: 700;
+  font-size: clamp(17px, 2.05vw, 24px);
+  line-height: 1.55;
+}
+
+#papa-dub-caption-root[data-scale="sm"] .papa-caption-original { font-size: clamp(10.5px, 1.15vw, 13px); }
+#papa-dub-caption-root[data-scale="sm"] .papa-caption-translation { font-size: clamp(14px, 1.6vw, 18px); }
+
+#papa-dub-caption-root[data-scale="lg"] .papa-caption-original { font-size: clamp(14px, 1.8vw, 19px); }
+#papa-dub-caption-root[data-scale="lg"] .papa-caption-translation { font-size: clamp(21px, 2.6vw, 31px); }
