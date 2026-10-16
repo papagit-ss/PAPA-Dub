@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="assets/logo.jpg" width="140" alt="PAPA Dub logo" />
+</p>
+
 # PAPA Dub — Live AI Dubbing (Ultra-Low-Latency Edition)
 
 یک اکستنشن مستقل Manifest V3 با هویت **PAPA Dub** برای دوبله زنده و فوق‌سریع صدای تب مرورگر با Gemini Live API.
